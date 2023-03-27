@@ -9,7 +9,7 @@ spec:
       analysis:
         templates:
           - templateName: success-rate
-        # startingStep: 2 # delay starting analysis run until setWeight: 40%
+        startingStep: 2 # delay starting analysis run until setWeight: 40%
         args:
           - name: service-name
             value: rollouts-demo-canary.default.svc.cluster.local
@@ -23,15 +23,15 @@ spec:
                 - primary # At least one route is required
       steps:
         - setWeight: 5
-        - pause: { duration: 1m }
+        - pause: { duration: 30s }
         - setWeight: 15
-        - pause: { duration: 1m }
+        - pause: { duration: 30s }
         - setWeight: 30
-        - pause: { duration: 1m }
+        - pause: { duration: 30s }
         - setWeight: 60
-        - pause: { duration: 1m }
+        - pause: { duration: 30s }
         - setWeight: 80
-        - pause: { duration: 1m }
+        - pause: { duration: 30s }
   revisionHistoryLimit: 2
   selector:
     matchLabels:
