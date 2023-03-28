@@ -30,11 +30,11 @@ spec:
             stableSubsetName: stable
       steps:
         - setWeight: 5
-        - pause: { duration: 1m }
+        - pause: { duration: 30s }
         - setWeight: 15
-        - pause: { duration: 1m }
+        - pause: { duration: 30s }
         - setWeight: 30
-        - pause: { duration: 1m }
+        - pause: { duration: 30s }
         - setWeight: 60
         - pause: { duration: 30s }
         - setWeight: 80
