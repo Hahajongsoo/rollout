@@ -9,25 +9,32 @@ spec:
       analysis:
         templates:
           - templateName: success-rate
-        startingStep: 2 # delay starting analysis run until setWeight: 40%
+        startingStep: 1 # delay starting analysis run until setWeight: 40%
         args:
-          - name: service-name
-            value: rollouts-demo-canary.default.svc.cluster.local
-      canaryService: rollouts-demo-canary
-      stableService: rollouts-demo-stable
+          - name: namespace
+            value: default
+          - name: rollout-name
+            value: rollouts-demo
+          - name: canary-pod-hash
+            valueFrom:
+              podTemplateHashValue: Latest
       trafficRouting:
         istio:
           virtualServices:
-            - name: rollouts-demo # At least one virtualService is required
+            - name: rollouts-demo
               routes:
-                - primary # At least one route is required
+                - primary
+          destinationRule:
+            name: rollout-destrule
+            canarySubsetName: canary
+            stableSubsetName: stable
       steps:
         - setWeight: 5
-        - pause: { duration: 30s }
+        - pause: { duration: 1m }
         - setWeight: 15
-        - pause: { duration: 30s }
+        - pause: { duration: 1m }
         - setWeight: 30
-        - pause: { duration: 30s }
+        - pause: { duration: 1m }
         - setWeight: 60
         - pause: { duration: 30s }
         - setWeight: 80
@@ -44,7 +51,7 @@ spec:
     spec:
       containers:
         - name: rollouts-demo
-          image: argoproj/rollouts-demo:red
+          image: argoproj/rollouts-demo:blue
           ports:
             - name: http
               containerPort: 8080

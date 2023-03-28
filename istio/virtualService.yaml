@@ -11,12 +11,10 @@ spec:
     - name: primary
       route:
         - destination:
-            host: rollouts-demo-stable
-            port:
-              number: 80
+            host: rollouts-demo
+            subset: stable
           weight: 100
         - destination:
-            host: rollouts-demo-canary
-            port:
-              number: 80
+            host: rollouts-demo
+            subset: canary
           weight: 0
